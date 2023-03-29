@@ -3,24 +3,25 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Main {
-    static int qtdTrocasBolha = 0;
-    static int qtdCompBolha = 0;
-    static int qtdTrocasSelecao = 0;
-    static int qtdCompSelecao = 0;
+    static long qtdTrocasBolha = 0;
+    static long qtdCompBolha = 0;
+    static long qtdTrocasSelecao = 0;
+    static long qtdCompSelecao = 0;
 
-    static int[] totalTrocaBolha = new int[50];
-    static int[] totalCompBolha = new int[50];
-    static int[] totalTrocaSelecao = new int[50];
-    static int[] totalCompSelecao = new int[50];
+    static long[] totalTrocaBolha = new long[50];
+    static long[] totalCompBolha = new long[50];
+    static long[] totalTrocaSelecao = new long[50];
+    static long[] totalCompSelecao = new long[50];
 
     public static void main(String[] args) throws Exception {
         //long tempoInicial = System.currentTimeMillis();
-        int total = 0;
+        long total = 0;
         //List<Integer> gerado = geraVetor(100_000), a = gerado, b = gerado;
         //a = new LinkedList<>(gerado);
         //b = new LinkedList<>(gerado);
 
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 2; i++) {
+            System.out.println(i);
             List<Integer> gerado = geraVetor(100_000), a = gerado;
             a = new LinkedList<>(gerado);
             Integer[] y = gerado.toArray(new Integer[0]), x = a.toArray(new Integer[0]);
@@ -28,14 +29,24 @@ public class Main {
             bubble(x, i);
         }
         mergeSort(totalCompBolha);
+        System.out.println();
         for (int i = 0; i < totalCompBolha.length; i++) {
-        System.out.println(totalCompBolha[i]);
+
+            System.out.print(totalCompBolha[i]);
 
         }
+        mergeSort(totalTrocaBolha);
+        System.out.println();
+        for (int i = 0; i < totalTrocaBolha.length; i++) {
+
+            System.out.print(totalTrocaBolha[i]);
+
+        }
+        System.out.println();
         System.out.println("-------------------------------------");
         System.out.println("Bolha:");
         System.out.println("------------Comparacoes--------------");
-        System.out.println("Menor: " + totalCompBolha[0] + "------- Maior:D " + totalCompBolha[totalCompBolha.length - 1]);
+        System.out.println("Menor: " + totalCompBolha[0] + " ------- Maior:D " + totalCompBolha[totalCompBolha.length - 1]);
         for (int i = 0; i < totalCompBolha.length; i++) {
             total = +totalCompBolha[i];
         }
@@ -44,7 +55,7 @@ public class Main {
         mergeSort(totalTrocaBolha);
         System.out.println("-------------------------------------");
         System.out.println("------------Trocas-------------------");
-        System.out.println("Menor: " + totalTrocaBolha[0] + "------- Maior: " + totalTrocaBolha[totalTrocaBolha.length - 1]);
+        System.out.println("Menor: " + totalTrocaBolha[0] + " ------- Maior: " + totalTrocaBolha[totalTrocaBolha.length - 1]);
         for (int i = 0; i < totalTrocaBolha.length; i++) {
             total = +totalTrocaBolha[i];
         }
@@ -93,6 +104,8 @@ public class Main {
      */
 
     public static void selection(Integer[] arr, int pos) {
+        qtdCompSelecao = 0;
+        qtdTrocasSelecao = 0;
         int tam = arr.length;
         for (int i = 0; i < tam - 1; i++) {
             int index = i;
@@ -107,8 +120,12 @@ public class Main {
             arr[index] = arr[i];
             arr[i] = smallerNumber;
         }
+        System.out.println(qtdTrocasSelecao);
+        System.out.println(qtdCompSelecao);
         totalTrocaSelecao[pos] = qtdTrocasSelecao;
+        System.out.println(totalTrocaSelecao[pos]);
         totalCompSelecao[pos] = qtdCompSelecao;
+        System.out.println(totalCompSelecao[pos]);
     }
 
     /**
@@ -117,6 +134,8 @@ public class Main {
      */
 
     public static void bubble(Integer arr[], int pos) {
+        qtdTrocasBolha = 0;
+        qtdCompBolha = 0;
         int aux = 0;
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr.length - 1; j++) {
@@ -129,11 +148,15 @@ public class Main {
                 }
             }
         }
+        System.out.println(qtdTrocasBolha);
+        System.out.println(qtdCompBolha);
         totalTrocaBolha[pos] = qtdTrocasBolha;
+        System.out.println(totalTrocaBolha[pos]);
         totalCompBolha[pos] = qtdCompBolha;
+        System.out.println(totalCompBolha[pos]);
     }
 
-    private static void mergeSort(int[] vetor) {
+    private static void mergeSort(long[] vetor) {
     /* Variavel utilizada para percorrer o vetor.
       Inicializa com 1 para indicar que o vetor tenha pelo menos 1 elemento. */
         int elementos = 1;
@@ -173,9 +196,9 @@ public class Main {
 
     }
 
-    private static void intercala(int[] vetor, int inicio, int meio, int fim) {
+    private static void intercala(long[] vetor, int inicio, int meio, int fim) {
         /* Vetor utilizado para guardar os valors ordenados. */
-        int novoVetor[] = new int[fim - inicio];
+        long novoVetor[] = new long[fim - inicio];
         /* Variavel utilizada para guardar a posicao do inicio do vetor. */
         int i = inicio;
         /* Variavel utilizada para guardar a posição do meio do vetor. */
