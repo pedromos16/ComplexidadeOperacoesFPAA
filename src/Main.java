@@ -1,6 +1,7 @@
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 public class Main {
     static long qtdTrocasBolha = 0;
@@ -21,12 +22,15 @@ public class Main {
         //b = new LinkedList<>(gerado);
 
         for (int i = 0; i < 50; i++) {
-            List<Integer> gerado = geraVetor(100_000), a = gerado;
+            List<Integer> gerado = geraVetor(100_000, true), a = gerado;
             a = new LinkedList<>(gerado);
             Integer[] y = gerado.toArray(new Integer[0]), x = a.toArray(new Integer[0]);
             selection(y, i);
             bubble(x, i);
         }
+
+        System.out.print("Parte 1:");
+
         mergeSort(totalCompBolha);
         System.out.println();
         System.out.println("-------------------------------------");
@@ -65,6 +69,39 @@ public class Main {
             total = +totalTrocaSelecao[i];
         }
         System.out.println("Media: " + total / totalTrocaSelecao.length);
+
+        /**
+        System.out.println();
+        for (int i = 0; i < totalCompBolha.length; i++) {
+            System.out.print(totalCompBolha[i]+" ");
+        }
+        System.out.println();
+        for (int i = 0; i < totalTrocaBolha.length; i++) {
+            System.out.print(totalTrocaBolha[i]+" ");
+        }
+        System.out.println();
+        for (int i = 0; i < totalCompSelecao.length; i++) {
+            System.out.print(totalCompSelecao[i]+" ");
+        }
+        System.out.println();
+        for (int i = 0; i < totalTrocaSelecao.length; i++) {
+            System.out.print(totalTrocaSelecao[i]+" ");
+        }
+
+         **/
+
+        System.out.println("Parte 2: ");
+
+        Random aleatorio = new Random();
+        int numAle=0;
+        for (int i = 0; i < 1_000_000; i++) {
+            numAle = aleatorio.nextInt(11_000)+1;
+            List<Integer> gerado = geraVetor(10_000, false), a = gerado;
+            a = new LinkedList<>(gerado);
+            Integer[] y = gerado.toArray(new Integer[0]);
+            pesquisaSequencial(numAle, y);
+        }
+
         //long tempoFinal = System.currentTimeMillis();
         //System.out.println(tempoFinal-tempoInicial);
     }
@@ -75,12 +112,14 @@ public class Main {
      * @throws Exception
      */
 
-    public static List<Integer> geraVetor(int numbersNeeded) throws Exception {
+    public static List<Integer> geraVetor(int numbersNeeded, boolean embaralhado) throws Exception {
         List<Integer> novo = new LinkedList<Integer>();
         for (int i = 0; i < numbersNeeded; i++) {
             novo.add(i + 1);
         }
-        Collections.shuffle(novo);
+        if (embaralhado) {
+            Collections.shuffle(novo);
+        }
         return novo;
     }
 
@@ -225,4 +264,28 @@ public class Main {
         }
     }
 
+    /**
+     * Método utilizado para procurar se um elemento está dentro do vetor.
+     * Este método utiliza o algoritmo de Pesquisa Sequencial para encontrar
+     * o elemento.
+     *
+     * @param x    - Número que será procurado.
+     * @param numeros - Vetor de números.
+     */
+    static public Integer pesquisaSequencial(int x, Integer[] numeros) {
+        int cont = 0;
+
+        for(cont = 0; cont < numeros.length; cont++) {
+            //Verifica se o elemento que está sendo procurado está no vetor.
+            if (numeros[cont] == x) {
+                //Se encontrou o elemento, imprime ele na tela e para a pesquisa.
+                return cont;
+
+            }
+        }
+
+        return 10001;
+    }
 }
+
+
