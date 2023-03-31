@@ -14,13 +14,15 @@ public class Main {
     static long[] totalTrocaSelecao = new long[50];
     static long[] totalCompSelecao = new long[50];
 
+    static long[] totalAleatorio = new long[22]; //ou 21
+
     public static void main(String[] args) throws Exception {
         //long tempoInicial = System.currentTimeMillis();
         long total = 0;
         //List<Integer> gerado = geraVetor(100_000), a = gerado, b = gerado;
         //a = new LinkedList<>(gerado);
         //b = new LinkedList<>(gerado);
-
+        /**
         for (int i = 0; i < 50; i++) {
             List<Integer> gerado = geraVetor(100_000, true), a = gerado;
             a = new LinkedList<>(gerado);
@@ -93,13 +95,23 @@ public class Main {
         System.out.println("Parte 2: ");
 
         Random aleatorio = new Random();
-        int numAle=0;
+        int numAle=0, posicao = 0, categoria = 0;
         for (int i = 0; i < 1_000_000; i++) {
+            categoria = 0;
             numAle = aleatorio.nextInt(11_000)+1;
             List<Integer> gerado = geraVetor(10_000, false), a = gerado;
             a = new LinkedList<>(gerado);
             Integer[] y = gerado.toArray(new Integer[0]);
-            pesquisaSequencial(numAle, y);
+            posicao = pesquisaSequencial(numAle, y);
+            categoria = agrupamentoRecursivo(1,500, posicao, categoria);
+            totalAleatorio[categoria] = totalAleatorio[categoria] + posicao;
+        }
+
+        int max=500, min=1;
+        for (int i = 0; i < totalAleatorio.length; i++) {
+            System.out.println("O valor total do numeros gerados entre "+min+" e "+max+" foi um total de "+totalAleatorio[i]);
+            max += 500;
+            min += 500;
         }
 
         //long tempoFinal = System.currentTimeMillis();
@@ -285,6 +297,13 @@ public class Main {
         }
 
         return 10001;
+    }
+
+    static public int agrupamentoRecursivo(int min, int max, int posicao, int categoria){
+        if (posicao>= min && posicao<=max) {
+            return categoria;
+        } else
+            return agrupamentoRecursivo(min+500,max+500, posicao, categoria+1);
     }
 }
 
